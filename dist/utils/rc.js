@@ -41,14 +41,12 @@ const get = exports.get = async key => {
 const getAll = exports.getAll = async () => {
   const exit = await exits(_constants.RC);
   let opts;
-  console.log("==========>" + exit);
   if (exit) {
     opts = await readFile(_constants.RC, "utf8");
     opts = (0, _ini.decode)(opts);
-    console.log("---" + JSON.stringify(opts));
     return opts;
   }
-  return {};
+  return _constants.DEFAULTS;
 };
 
 const set = exports.set = async (key, value) => {

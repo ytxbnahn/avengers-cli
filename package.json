@@ -1,6 +1,6 @@
 {
   "name": "avengers-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "希望成为一个优秀的框架",
   "main": "index.js",
   "bin": {
