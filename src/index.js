@@ -1,3 +1,5 @@
+
+import "babel-polyfill";
 // 主的流程控制
 let apply = (action, ...args) => {
   //babel-env

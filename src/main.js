@@ -31,7 +31,6 @@ Object.keys(actionMap).forEach(action => {
   program
     .command(action)
     .description(actionMap[action].description)
-    .alias(actionMap[action].alias) //别名
     .action(() => {
       switch (action) {
         case "config":

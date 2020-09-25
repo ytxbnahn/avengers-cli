@@ -16,13 +16,15 @@ var _chalk2 = _interopRequireDefault(_chalk);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 /**
  * avengers commands
  *    - config
  *    - init
  */
 
-let actionMap = {
+var actionMap = {
   init: {
     description: "generate a new project from a template",
     usages: ["avengers init templateName projectName"]
@@ -35,16 +37,15 @@ let actionMap = {
   } };
 
 // 添加 init / config 命令
-Object.keys(actionMap).forEach(action => {
-  _commander2.default.command(action).description(actionMap[action].description).alias(actionMap[action].alias) //别名
-  .action(() => {
+Object.keys(actionMap).forEach(function (action) {
+  _commander2.default.command(action).description(actionMap[action].description).action(function () {
     switch (action) {
       case "config":
         //配置
-        (0, _index2.default)(action, ...process.argv.slice(3));
+        _index2.default.apply(undefined, [action].concat(_toConsumableArray(process.argv.slice(3))));
         break;
       case "init":
-        (0, _index2.default)(action, ...process.argv.slice(3));
+        _index2.default.apply(undefined, [action].concat(_toConsumableArray(process.argv.slice(3))));
         break;
       default:
         break;
@@ -54,8 +55,8 @@ Object.keys(actionMap).forEach(action => {
 
 function help() {
   console.log("\r\nUsage:");
-  Object.keys(actionMap).forEach(action => {
-    actionMap[action].usages.forEach(usage => {
+  Object.keys(actionMap).forEach(function (action) {
+    actionMap[action].usages.forEach(function (usage) {
       console.log("  - " + usage);
     });
   });

@@ -26,51 +26,94 @@ var _get = require("./utils/get");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let init = async projectName => {
-  if (!projectName) {
-    console.log(_logSymbols2.default.error, _chalk2.default.red("Project needs a name"));
-    return;
-  }
-  //项目不存在
-  if (!_fs2.default.existsSync(projectName)) {
-    //命令行交互
-    _inquirer2.default.prompt([{
-      type: "expand",
-      message: "请选择一种模版",
-      name: "templateName",
-      choices: _constants.TEMPLATES
-    }, {
-      name: "description",
-      message: "Please enter the project description: "
-    }, {
-      name: "author",
-      message: "Please enter the author name: "
-    }]).then(async answer => {
-      //下载模板 选择模板
-      //通过配置文件，获取模板信息
-      const { templateName, author, description } = answer;
-      let loading = (0, _ora2.default)("downloading template ...");
-      loading.start();
-      (0, _get.downloadLocal)(templateName, projectName).then(() => {
-        loading.succeed();
-        const fileName = `${projectName}/package.json`;
-        if (_fs2.default.existsSync(fileName)) {
-          const data = _fs2.default.readFileSync(fileName).toString();
-          let json = JSON.parse(data);
-          json.name = projectName;
-          json.author = author;
-          json.description = description;
-          //修改项目文件夹中 package.json 文件
-          _fs2.default.writeFileSync(fileName, JSON.stringify(json, null, "\t"), "utf-8");
-          console.log(_logSymbols2.default.success, _chalk2.default.green("Project initialization finished!"));
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+var init = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(projectName) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (projectName) {
+              _context2.next = 3;
+              break;
+            }
+
+            console.log(_logSymbols2.default.error, _chalk2.default.red("Project needs a name"));
+            return _context2.abrupt("return");
+
+          case 3:
+            //项目不存在
+            if (!_fs2.default.existsSync(projectName)) {
+              //命令行交互
+              _inquirer2.default.prompt([{
+                type: "expand",
+                message: "请选择一种模版",
+                name: "templateName",
+                choices: _constants.TEMPLATES
+              }, {
+                name: "description",
+                message: "Please enter the project description: "
+              }, {
+                name: "author",
+                message: "Please enter the author name: "
+              }]).then(function () {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(answer) {
+                  var templateName, author, description, loading;
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          //下载模板 选择模板
+                          //通过配置文件，获取模板信息
+                          templateName = answer.templateName, author = answer.author, description = answer.description;
+                          loading = (0, _ora2.default)("downloading template ...");
+
+                          loading.start();
+                          (0, _get.downloadLocal)(templateName, projectName).then(function () {
+                            loading.succeed();
+                            var fileName = projectName + "/package.json";
+                            if (_fs2.default.existsSync(fileName)) {
+                              var data = _fs2.default.readFileSync(fileName).toString();
+                              var json = JSON.parse(data);
+                              json.name = projectName;
+                              json.author = author;
+                              json.description = description;
+                              //修改项目文件夹中 package.json 文件
+                              _fs2.default.writeFileSync(fileName, JSON.stringify(json, null, "\t"), "utf-8");
+                              console.log(_logSymbols2.default.success, _chalk2.default.green("Project initialization finished!"));
+                            }
+                          }, function () {
+                            loading.fail();
+                          });
+
+                        case 4:
+                        case "end":
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee, undefined);
+                }));
+
+                return function (_x2) {
+                  return _ref2.apply(this, arguments);
+                };
+              }());
+            } else {
+              //项目已经存在
+              console.log(_logSymbols2.default.error, _chalk2.default.red("The project already exists"));
+            }
+
+          case 4:
+          case "end":
+            return _context2.stop();
         }
-      }, () => {
-        loading.fail();
-      });
-    });
-  } else {
-    //项目已经存在
-    console.log(_logSymbols2.default.error, _chalk2.default.red("The project already exists"));
-  }
-};
+      }
+    }, _callee2, undefined);
+  }));
+
+  return function init(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
 module.exports = init;
