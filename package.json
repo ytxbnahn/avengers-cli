@@ -1,6 +1,6 @@
 {
   "name": "avengers-cli",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "希望成为一个优秀的框架",
   "main": "index.js",
   "bin": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ytxbnahn/avengers-cli#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "chalk": "^3.0.0",
     "commander": "^5.0.0",
     "download-git-repo": "^3.0.2",
