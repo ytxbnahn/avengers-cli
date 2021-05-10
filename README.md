@@ -7,7 +7,7 @@
 yarn global add avengers-cli
 or
 npm install -g avengers-cli
-avergers init my-app
+avengers init my-app
 ```
 
 ### 需要使用的第三方库
